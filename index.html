@@ -22,6 +22,14 @@
       --blue: #a9d3f1;
       --lav: #c9b6df;
       --ink: #000000;
+      --nav-h: 68px;
+    }
+
+    /* Smooth anchor scrolling + offset for the sticky navbar.
+       scroll-padding belongs on the ROOT element (html), not body. */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + 22px);
     }
 
     body {
@@ -29,8 +37,15 @@
       font-size: 1.1rem;
       color: var(--ink);
       background-color: #fff;
-      scroll-padding-top: 80px;
-      overflow-x: hidden;
+      /* overflow-x: clip does NOT create a scroll container,
+         so position: sticky on the navbar keeps working. */
+      overflow-x: clip;
+    }
+
+    /* Extra safety: every anchor target lands below the sticky navbar */
+    section[id],
+    [id] {
+      scroll-margin-top: calc(var(--nav-h) + 22px);
     }
 
     h1, h3, h4, h5, h6 {
@@ -172,7 +187,7 @@
 
     @media (min-width: 992px) {
       .navbar {
-        height: 68px;
+        height: var(--nav-h);
         padding-top: 0;
         padding-bottom: 0;
       }
@@ -346,6 +361,7 @@
       display: inline-block;
       margin-right: 10px;
       margin-bottom: 10px;
+      text-decoration: none;
     }
     .counter-btn:hover {
       opacity: 0.8;
@@ -418,6 +434,7 @@
     }
     .aim-note .drawn-content {
       padding: 1.8rem 2.2rem;
+      text-align: center;
     }
 
     .timeline-heading {
@@ -580,6 +597,11 @@
       .resource-stamp img { max-width: 240px; }
       .resource-stamp .placeholder-icon { font-size: 4rem; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .scroll-anim { transition: none; opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -614,13 +636,13 @@
   </svg>
 
   <div class="top-banner">
-    <img src="banner1.png" alt="The Inception of Learning">
+    <img src="banner1.png" alt="The Inception of Learning" onerror="this.style.display='none';">
   </div>
 
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#home">
-        <img src="logo.png" alt="Logo">
+        <img src="logo.png" alt="Logo" onerror="this.style.display='none';">
         The Inception of Learning
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -661,8 +683,8 @@
           </div>
           <div class="col-lg-6 mt-5 mt-lg-0 scroll-anim slide-right">
             <div class="hero-art">
-              <img src="ninja-vr.png" alt="Ninja with VR headset">
-              <img src="ninja-heart.png" alt="Ninja making a heart">
+              <img src="ninja-vr.png" alt="Ninja with VR headset" onerror="this.style.display='none';">
+              <img src="ninja-heart.png" alt="Ninja making a heart" onerror="this.style.display='none';">
             </div>
           </div>
         </div>
@@ -678,7 +700,7 @@
               Here you can find the Ninja Manual to work with Gen Z and Gen Alpha - a practical guide for youth workers, trainers, educators and teachers (yes, also teachers!). In the Manual you can read more about the learning preferences of the two generations, the ideas we put together for working with them, and the ready to use activities the project created. There are also tips and recommendations for staying in tune. The Manual was created as a result of a piece of research we conducted over several months, the outcomes of a Lab and a training course we conducted with youth workers, activists, trainers and educators. The activities in the Manual were created in the Lab and tested in the training course.
             </p>
             <div class="mt-4">
-              <a href="manual.pdf" class="btn counter-btn bg-green" id="btn-manual" target="_blank" rel="noopener">Download PDF <i class="fas fa-download ms-1"></i></a>
+              <a href="./manual.pdf" download="manual.pdf" class="btn counter-btn bg-green" id="btn-manual">Download PDF <i class="fas fa-download ms-1"></i></a>
               <div class="download-counter">
                 <strong id="counter-manual">0</strong>
                 <span class="counter-label">downloads</span>
@@ -704,7 +726,7 @@
               In this section you can find 10 inspirational podcast interviews with professionals from all over the world. We engaged with experts such as Barbara Oakley (USA), David Yeager (USA) and Ashley Fell (Australia) who spoke about motivation, learning trends, myths and realities, leadership, and the participation of Gen Z and Gen Alpha in their learning.
             </p>
             <div class="mt-4">
-              <a href="https://talkingyouthwork.podbean.com/" class="btn counter-btn bg-pink" id="btn-podcast" target="_blank" rel="noopener">Listen on Podbean <i class="fas fa-external-link-alt ms-1"></i></a>
+              <a href="https://talkingyouthwork.podbean.com/" class="btn counter-btn bg-pink" id="btn-podcast" target="_blank" rel="noopener noreferrer">Listen on Podbean <i class="fas fa-external-link-alt ms-1"></i></a>
               <div class="download-counter">
                 <strong id="counter-podcast">0</strong>
                 <span class="counter-label">listens</span>
@@ -730,7 +752,7 @@
               We produced ten infographics that summarise the findings from the research we conducted within the frame of our project. They explore the learning needs and preferences of Gen Alpha and Gen Z, how learning is working in youth work and within the formal education system. They also provide tips and direction for staying in tune as a youth worker or educator.
             </p>
             <div class="mt-4">
-              <a href="infographics.pdf" class="btn counter-btn bg-blue" id="btn-info" target="_blank" rel="noopener">Download Infographics <i class="fas fa-download ms-1"></i></a>
+              <a href="./infographics.pdf" download="infographics.pdf" class="btn counter-btn bg-blue" id="btn-info">Download Infographics <i class="fas fa-download ms-1"></i></a>
               <div class="download-counter">
                 <strong id="counter-info">0</strong>
                 <span class="counter-label">downloads</span>
@@ -759,8 +781,8 @@
               If you don’t have time to read the full articles, we made a series of videos so you can get to know the essence of each article in just over a minute each!
             </p>
             <div class="mt-4">
-              <a href="#" class="btn counter-btn bg-yellow" id="btn-read">Read Articles <i class="fas fa-download ms-1"></i></a>
-              <a href="https://www.youtube.com/@talkingyouthwork" class="btn counter-btn bg-orange" id="btn-watch" target="_blank" rel="noopener">Watch Videos <i class="fas fa-play ms-1"></i></a>
+              <a href="./articles.pdf" download="articles.pdf" class="btn counter-btn bg-yellow" id="btn-read">Read Articles <i class="fas fa-download ms-1"></i></a>
+              <a href="https://www.youtube.com/@talkingyouthwork" class="btn counter-btn bg-orange" id="btn-watch" target="_blank" rel="noopener noreferrer">Watch Videos <i class="fas fa-play ms-1"></i></a>
               <br>
               <div class="download-counter mt-2">
                 <strong id="counter-read">0</strong>
@@ -943,7 +965,7 @@
                 <p>
                   Team MAIS is a consultancy company based in Lisbon with solid international experience focused on innovative solutions for Youth Work and Adult Education. Team Mais develops training and educational materials mostly for educators, trainers, teachers and organisations. Established in 2007, the company works with organisations across Europe through the Erasmus+ programme and other frameworks. Previously, the team was part of an informal group of young youth workers who developed several international projects within the Youth in Action programme, gaining several years of experience managing international projects and developing content for international non-formal education contexts.
                 </p>
-                <a href="http://www.teammais.pt" target="_blank" rel="noopener">www.teammais.pt</a>
+                <a href="http://www.teammais.pt" target="_blank" rel="noopener noreferrer">www.teammais.pt</a>
               </div>
             </div>
           </div>
@@ -964,55 +986,137 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const sections = document.querySelectorAll('section[id], div[id="manual"], div[id="podcasts"], div[id="infographics"], div[id="articles"]');
-      const navLinks = document.querySelectorAll('.nav-link');
 
-      const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            navLinks.forEach(link => {
-              link.classList.remove('active');
-              if (link.getAttribute('href') === '#' + entry.target.id) {
-                link.classList.add('active');
-              }
-            });
+      /* ---------------------------------------------------------
+         1. MOBILE NAV: close the collapsed menu after a link click
+            (this was the main reason links "did nothing" on phones)
+      --------------------------------------------------------- */
+      var navCollapseEl = document.getElementById('mainNav');
+      var bsCollapse = null;
+      if (navCollapseEl && window.bootstrap && bootstrap.Collapse) {
+        bsCollapse = bootstrap.Collapse.getOrCreateInstance(navCollapseEl, { toggle: false });
+      }
+
+      function closeMobileNav() {
+        if (navCollapseEl && navCollapseEl.classList.contains('show') && bsCollapse) {
+          bsCollapse.hide();
+        }
+      }
+
+      /* ---------------------------------------------------------
+         2. SAFE ANCHOR HANDLING
+            - only intercept links whose target actually exists
+            - smooth scroll with correct navbar offset
+            - keeps the URL hash updated (back button / sharing works)
+      --------------------------------------------------------- */
+      function scrollToTarget(target) {
+        var navEl = document.querySelector('.navbar.sticky-top');
+        var offset = (navEl ? navEl.offsetHeight : 0) + 18;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var hash = link.getAttribute('href');
+          if (!hash || hash === '#') return;
+
+          var target = document.getElementById(hash.slice(1));
+          if (!target) {
+            // Dead anchor - prevent the silent jump-to-top behaviour.
+            e.preventDefault();
+            console.warn('Anchor target not found:', hash);
+            return;
           }
-        });
-      }, { rootMargin: '-50% 0px -50% 0px' });
-      sections.forEach(section => navObserver.observe(section));
 
-      const animElements = document.querySelectorAll('.scroll-anim');
-      const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          } else {
-            entry.target.classList.remove('is-visible');
-          }
-        });
-      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-      animElements.forEach(el => scrollObserver.observe(el));
+          e.preventDefault();
+          closeMobileNav();
 
+          // Let Bootstrap finish collapsing before measuring.
+          window.setTimeout(function () {
+            scrollToTarget(target);
+            if (history.replaceState) {
+              history.replaceState(null, '', hash);
+            }
+          }, 60);
+        });
+      });
+
+      /* Deep link support: /page.html#manual on first load */
+      if (window.location.hash.length > 1) {
+        var deepTarget = document.getElementById(window.location.hash.slice(1));
+        if (deepTarget) {
+          window.setTimeout(function () { scrollToTarget(deepTarget); }, 120);
+        }
+      }
+
+      /* ---------------------------------------------------------
+         3. ACTIVE NAV LINK HIGHLIGHT
+      --------------------------------------------------------- */
+      var navLinks = document.querySelectorAll('.nav-link');
+      var sections = document.querySelectorAll('section[id], [id="partners"]');
+
+      function setActiveLink(id) {
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActiveLink(entry.target.id);
+            }
+          });
+        }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+        sections.forEach(function (section) { navObserver.observe(section); });
+      }
+
+      /* ---------------------------------------------------------
+         4. SCROLL-IN ANIMATIONS
+      --------------------------------------------------------- */
+      var animElements = document.querySelectorAll('.scroll-anim');
+      if ('IntersectionObserver' in window) {
+        var scrollObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            entry.target.classList.toggle('is-visible', entry.isIntersecting);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        animElements.forEach(function (el) { scrollObserver.observe(el); });
+      } else {
+        animElements.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      /* ---------------------------------------------------------
+         5. LOCAL DISPLAY COUNTERS
+            They never block navigation or downloads.
+      --------------------------------------------------------- */
       function setupCounter(buttonSelector, counterId, storageKey) {
-        const btn = document.querySelector(buttonSelector);
-        const counterEl = document.getElementById(counterId);
-
+        var btn = document.querySelector(buttonSelector);
+        var counterEl = document.getElementById(counterId);
         if (!btn || !counterEl) return;
 
-        let currentCount = parseInt(localStorage.getItem(storageKey)) || 0;
+        var currentCount = 0;
+        try {
+          currentCount = parseInt(localStorage.getItem(storageKey), 10) || 0;
+        } catch (error) {
+          currentCount = 0;
+        }
         counterEl.textContent = currentCount;
 
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-
-          currentCount++;
-          localStorage.setItem(storageKey, currentCount);
+        btn.addEventListener('click', function () {
+          currentCount += 1;
+          try {
+            localStorage.setItem(storageKey, String(currentCount));
+          } catch (error) {
+            // Storage unavailable - the link must still work.
+          }
           counterEl.textContent = currentCount;
-
+          counterEl.classList.remove('bump');
+          void counterEl.offsetWidth;
           counterEl.classList.add('bump');
-          setTimeout(() => {
-            counterEl.classList.remove('bump');
-          }, 300);
+          window.setTimeout(function () { counterEl.classList.remove('bump'); }, 300);
         });
       }
 
