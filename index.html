@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding the New Generations | The Inception of Learning</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Knewave&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.cdnfonts.com/css/goodlist');
+  </style>
+
+  <style>
+    :root {
+      --green: #8dc63f;
+      --yellow: #fbd65c;
+      --orange: #fbb88b;
+      --pink: #f49ac1;
+      --blue: #a9d3f1;
+      --lav: #c9b6df;
+      --ink: #000000;
+    }
+
+    body {
+      font-family: 'Balsamiq Sans', sans-serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      background-color: #fff;
+      scroll-padding-top: 80px;
+      overflow-x: hidden;
+    }
+
+    h1, h3, h4, h5, h6 {
+      font-family: 'Goodlist', sans-serif;
+      text-transform: uppercase;
+      color: var(--ink);
+      letter-spacing: normal;
+    }
+
+    h2 {
+      font-family: 'Goodlist', sans-serif;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 400;
+      letter-spacing: normal;
+      margin-bottom: 1.5rem;
+    }
+
+    .bg-yellow { background-color: var(--yellow) !important; --card-bg: var(--yellow); --card-shadow: #d4b04a; }
+    .bg-pink   { background-color: var(--pink)   !important; --card-bg: var(--pink);   --card-shadow: #d67a9f; }
+    .bg-blue   { background-color: var(--blue)   !important; --card-bg: var(--blue);   --card-shadow: #7fb3d5; }
+    .bg-green  { background-color: var(--green)  !important; --card-bg: var(--green);  --card-shadow: #6fa32c; }
+    .bg-orange { background-color: var(--orange) !important; --card-bg: var(--orange); --card-shadow: #e09a6a; }
+    .bg-lav    { background-color: var(--lav)    !important; --card-bg: var(--lav);    --card-shadow: #a893c4; }
+
+    /* ---------- Organic hand-drawn card system ---------- */
+    .hand-drawn-card {
+      position: relative;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 4px;
+      transform: none !important;
+      border-radius: 0 !important;
+    }
+
+    .hand-drawn-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #121212;
+      clip-path: var(--shape, url(#organic-shape-1));
+      z-index: 1;
+      filter: drop-shadow(4px 5px 0 var(--card-shadow, #d4b04a));
+    }
+
+    .hand-drawn-card .drawn-shape {
+      display: none;
+    }
+
+    .hand-drawn-card .drawn-content {
+      position: relative;
+      z-index: 2;
+      background: var(--card-bg, #fdc99e);
+      clip-path: var(--shape, url(#organic-shape-1));
+      padding: 2rem 2.4rem;
+    }
+
+    /* --- Unique organic shape per card position --- */
+    .timeline-item:nth-child(1) .hand-drawn-card { --shape: url(#organic-shape-1); }
+    .timeline-item:nth-child(2) .hand-drawn-card { --shape: url(#organic-shape-2); }
+    .timeline-item:nth-child(3) .hand-drawn-card { --shape: url(#organic-shape-3); }
+    .timeline-item:nth-child(4) .hand-drawn-card { --shape: url(#organic-shape-4); }
+    .timeline-item:nth-child(5) .hand-drawn-card { --shape: url(#organic-shape-5); }
+    .timeline-item:nth-child(6) .hand-drawn-card { --shape: url(#organic-shape-6); }
+
+    #partners .row > div:nth-child(1) .partner-card { --shape: url(#organic-shape-6); }
+    #partners .row > div:nth-child(2) .partner-card { --shape: url(#organic-shape-1); }
+    #partners .row > div:nth-child(3) .partner-card { --shape: url(#organic-shape-8); }
+    #partners .row > div:nth-child(4) .partner-card { --shape: url(#organic-shape-2); }
+
+    .aim-note.hand-drawn-card { --shape: url(#organic-shape-4); }
+    .hero-note.hand-drawn-card { --shape: url(#organic-shape-7); }
+
+    .scroll-anim {
+      opacity: 0;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      will-change: opacity, transform;
+    }
+
+    .slide-left { transform: translateX(-100px); }
+    .slide-right { transform: translateX(100px); }
+
+    .scroll-anim.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .top-banner {
+      width: 100%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .top-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ---------- NAV ---------- */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      padding: 0.8rem 0;
+    }
+    .navbar-brand {
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.6rem;
+      color: var(--ink) !important;
+      text-transform: uppercase;
+      letter-spacing: normal;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+    }
+    .navbar-brand img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    .nav-link {
+      font-family: 'Balsamiq Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: normal;
+      color: var(--ink) !important;
+      font-size: 0.95rem;
+      padding: 0.6rem 1rem !important;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--orange) !important;
+    }
+
+    @media (min-width: 992px) {
+      .navbar {
+        height: 68px;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      .navbar > .container {
+        height: 100%;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+      .navbar-brand {
+        height: 100%;
+        gap: 12px;
+      }
+      .navbar-brand img {
+        height: 100%;
+        max-height: 100%;
+      }
+      .navbar-collapse {
+        height: 100%;
+        align-items: center;
+      }
+      .navbar-nav {
+        height: 100%;
+        align-items: center;
+      }
+      .nav-link {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background: var(--yellow);
+      padding: 100px 0 90px;
+      border-bottom: none;
+    }
+
+    .hero h1 {
+      font-family: 'Knewave', cursive;
+      font-size: clamp(2.24rem, 4.8vw, 4rem);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .hero .gen-line {
+      font-family: 'Knewave', cursive;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero .gen-line .yellow,
+    .hero .gen-line .orange {
+      display: inline-block;
+      padding: 0.04em 0.34em;
+      line-height: 1.08;
+      border: none;
+    }
+
+    .hero .gen-line .yellow { color: var(--ink); background: var(--yellow); }
+    .hero .gen-line .orange { color: var(--ink); background: transparent; }
+
+    .hero .and-word {
+      font-family: 'Balsamiq Sans', sans-serif;
+      font-size: 0.6em;
+      color: var(--ink);
+      text-transform: lowercase;
+      font-weight: 400;
+    }
+
+    .hero .lead {
+      font-family: 'Balsamiq Sans', sans-serif;
+      font-size: 1.4rem;
+      max-width: 650px;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    .hero .hero-note {
+      display: inline-block;
+      margin-top: 2rem;
+      --card-bg: #fff;
+      --card-shadow: #d8d8d8;
+    }
+    .hero .hero-note .drawn-content {
+      padding: 0.8rem 2rem;
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: normal;
+    }
+
+    .hero-art {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-art img {
+      max-height: 280px;
+      filter: drop-shadow(0 8px 4px rgba(0,0,0,0.15));
+    }
+
+    /* ---------- RESOURCE SECTIONS ---------- */
+    .resource-section {
+      padding: 90px 0;
+      width: 100%;
+      border-bottom: none;
+    }
+
+    .resource-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .resource-section p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 1.2rem;
+      font-family: 'Balsamiq Sans', sans-serif;
+    }
+
+    /* ---------- ILLUSTRATION STAMP (bare image only) ---------- */
+    .resource-stamp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .resource-stamp img {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .resource-stamp .placeholder-icon {
+      font-size: 6rem;
+      color: var(--ink);
+      opacity: 0.45;
+      display: none;
+    }
+
+    .counter-btn {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      border: none;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--ink) !important;
+      padding: 0.8rem 1.8rem;
+      transition: all 0.2s ease;
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .counter-btn:hover {
+      opacity: 0.8;
+      transform: translateY(-3px);
+    }
+
+    .bg-section-manual { background-color: #f8f9fa; }
+    .bg-section-podcast { background-color: #fce4ec; }
+    .bg-section-info { background-color: #e3f2fd; }
+    .bg-section-articles { background-color: #fffde7; }
+
+    .download-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #666;
+      margin-top: 0.5rem;
+      vertical-align: middle;
+    }
+    .download-counter strong {
+      display: inline-grid;
+      place-items: center;
+      min-width: 30px;
+      height: 30px;
+      padding: 0 8px;
+      background: #fff;
+      color: var(--ink);
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.1rem;
+      border-radius: 0;
+      border: none;
+      letter-spacing: normal;
+      text-transform: uppercase;
+    }
+
+    .download-counter strong.bump {
+      animation: bump 0.3s ease;
+    }
+    @keyframes bump {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); background: var(--yellow); }
+      100% { transform: scale(1); }
+    }
+
+    /* ---------- OVERVIEW ---------- */
+    .section-overview {
+      padding: 80px 0;
+      background: #f9f7f2;
+    }
+
+    .overview-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-family: 'Balsamiq Sans', sans-serif;
+    }
+
+    .aim-note {
+      margin: 2.5rem 0;
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: normal;
+    }
+    .aim-note .drawn-content {
+      padding: 1.8rem 2.2rem;
+      text-align: center;
+    }
+
+    .timeline-heading {
+      margin-top: 5rem;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .timeline-container::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background-color: #d1d1d1;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 20px 40px;
+      z-index: 2;
+    }
+
+    .timeline-item.left { left: 0; text-align: right; }
+    .timeline-item.left .timeline-card { text-align: left; }
+    .timeline-item.right { left: 50%; text-align: left; }
+
+    .timeline-node {
+      position: absolute;
+      top: 30px;
+      width: 46px;
+      height: 46px;
+      background-color: #fff;
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.2rem;
+      color: var(--ink);
+      z-index: 3;
+      border-radius: 50%;
+      letter-spacing: normal;
+    }
+
+    .timeline-item.left .timeline-node { right: -23px; }
+    .timeline-item.right .timeline-node { left: -23px; }
+
+    .timeline-card {
+      font-family: 'Balsamiq Sans', sans-serif;
+    }
+    .timeline-card .drawn-content {
+      padding: 2rem;
+    }
+
+    .timeline-card time {
+      display: inline-block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 4px 10px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .timeline-card h4 {
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      font-family: 'Goodlist', sans-serif;
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: normal;
+    }
+
+    .timeline-card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-container::after { left: 20px; }
+      .timeline-item { width: 100%; padding-left: 60px; padding-right: 0; text-align: left; }
+      .timeline-item.right { left: 0; }
+      .timeline-item.left .timeline-node, .timeline-item.right .timeline-node { left: -3px; right: auto; }
+    }
+
+    /* ---------- PARTNERS ---------- */
+    .section-partners {
+      padding: 80px 0;
+      background: #fff;
+    }
+    .partner-card {
+      height: 100%;
+      font-family: 'Balsamiq Sans', sans-serif;
+    }
+    .partner-card .drawn-content {
+      padding: 3rem 2.8rem;
+      height: 100%;
+    }
+
+    .partner-card h5 {
+      font-size: 1.4rem;
+      margin: 0.5rem 0 1rem;
+      line-height: 1.3;
+      font-family: 'Goodlist', sans-serif;
+      text-transform: uppercase;
+      font-weight: 400;
+      letter-spacing: normal;
+    }
+    .partner-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .partner-card a {
+      font-family: 'Goodlist', sans-serif;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: var(--ink);
+      letter-spacing: normal;
+      text-transform: uppercase;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--ink);
+      color: #fff;
+      padding: 2.5rem 0;
+    }
+    footer .brand-name {
+      font-family: 'Goodlist', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: normal;
+    }
+    footer .copy {
+      font-size: 1rem;
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 80px 0 50px; }
+      .hero-art img { max-height: 180px; }
+      .slide-left, .slide-right { transform: translateX(0); }
+      .resource-section { padding: 60px 0; }
+      .resource-stamp img { max-width: 240px; }
+      .resource-stamp .placeholder-icon { font-size: 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <clipPath id="organic-shape-1" clipPathUnits="objectBoundingBox">
+        <path d="M .05 .04 C .02 .06 .02 .12 .03 .22 C .01 .32 .03 .42 .02 .52 C .01 .62 .03 .72 .02 .82 C .02 .90 .03 .95 .08 .96 C .18 .98 .28 .96 .38 .97 C .48 .95 .58 .97 .68 .96 C .78 .98 .88 .96 .93 .96 C .97 .95 .98 .89 .97 .79 C .99 .69 .97 .59 .98 .49 C .99 .39 .97 .29 .98 .19 C .98 .11 .97 .05 .92 .04 C .82 .02 .72 .04 .62 .03 C .52 .05 .42 .03 .32 .04 C .22 .02 .12 .04 .05 .04 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-2" clipPathUnits="objectBoundingBox">
+        <path d="M .06 .03 C .03 .04 .03 .11 .05 .21 C .03 .31 .05 .41 .04 .51 C .03 .61 .05 .71 .04 .81 C .04 .89 .05 .94 .10 .95 C .20 .97 .30 .94 .40 .96 C .50 .93 .60 .96 .70 .94 C .80 .97 .90 .94 .94 .95 C .98 .95 .96 .88 .97 .78 C .99 .68 .96 .58 .98 .48 C .99 .38 .96 .28 .98 .18 C .97 .10 .96 .05 .91 .04 C .81 .01 .71 .04 .61 .02 C .51 .05 .41 .02 .31 .04 C .21 .01 .11 .04 .06 .03 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-3" clipPathUnits="objectBoundingBox">
+        <path d="M .04 .05 C .02 .08 .03 .14 .02 .24 C .04 .34 .02 .44 .03 .54 C .04 .64 .02 .74 .03 .84 C .03 .91 .04 .95 .09 .95 C .19 .94 .29 .97 .39 .95 C .49 .97 .59 .94 .69 .96 C .79 .94 .89 .96 .94 .95 C .98 .94 .97 .88 .96 .78 C .98 .68 .97 .58 .96 .48 C .98 .38 .97 .28 .96 .18 C .96 .10 .95 .05 .90 .05 C .80 .03 .70 .05 .60 .04 C .50 .06 .40 .04 .30 .05 C .20 .03 .10 .06 .04 .05 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-4" clipPathUnits="objectBoundingBox">
+        <path d="M .05 .05 C .02 .04 .01 .10 .03 .20 C .02 .30 .04 .40 .03 .50 C .02 .60 .04 .70 .03 .80 C .02 .88 .04 .94 .09 .96 C .17 .98 .27 .95 .37 .97 C .47 .94 .57 .97 .67 .95 C .77 .98 .87 .95 .93 .95 C .98 .95 .99 .88 .97 .78 C .99 .68 .97 .58 .98 .48 C .99 .38 .97 .28 .98 .18 C .98 .10 .97 .04 .92 .04 C .83 .01 .73 .04 .63 .03 C .53 .05 .43 .03 .33 .04 C .23 .02 .12 .06 .05 .05 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-5" clipPathUnits="objectBoundingBox">
+        <path d="M .06 .04 C .03 .06 .04 .12 .02 .22 C .04 .32 .02 .42 .04 .52 C .03 .62 .02 .72 .04 .82 C .03 .90 .05 .95 .10 .96 C .20 .94 .30 .97 .40 .95 C .50 .97 .60 .94 .70 .96 C .80 .94 .90 .97 .94 .95 C .98 .95 .97 .88 .96 .78 C .98 .68 .96 .58 .97 .48 C .98 .38 .96 .28 .97 .18 C .96 .10 .98 .05 .93 .04 C .83 .02 .73 .05 .63 .03 C .53 .06 .43 .03 .33 .05 C .23 .03 .13 .05 .06 .04 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-6" clipPathUnits="objectBoundingBox">
+        <path d="M .05 .03 C .02 .05 .03 .11 .02 .21 C .04 .31 .02 .41 .03 .51 C .04 .61 .02 .71 .03 .81 C .02 .89 .04 .94 .09 .95 C .19 .97 .29 .95 .39 .96 C .49 .94 .59 .97 .69 .95 C .79 .97 .89 .95 .94 .96 C .98 .95 .96 .89 .97 .79 C .98 .69 .96 .59 .97 .49 C .98 .39 .96 .29 .97 .19 C .97 .11 .95 .05 .90 .04 C .80 .02 .70 .04 .60 .03 C .50 .05 .40 .03 .30 .04 C .20 .02 .10 .04 .05 .03 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-7" clipPathUnits="objectBoundingBox">
+        <path d="M .05 .04 C .02 .07 .04 .13 .03 .23 C .01 .33 .04 .43 .02 .53 C .01 .63 .04 .73 .02 .83 C .02 .90 .04 .95 .09 .95 C .19 .97 .29 .94 .39 .96 C .49 .93 .59 .97 .69 .94 C .79 .97 .89 .94 .93 .96 C .97 .95 .98 .88 .96 .78 C .98 .68 .96 .58 .97 .48 C .98 .38 .96 .28 .97 .18 C .97 .10 .96 .04 .91 .04 C .81 .01 .71 .05 .61 .03 C .51 .06 .41 .02 .31 .04 C .21 .01 .11 .05 .05 .04 Z"/>
+      </clipPath>
+      <clipPath id="organic-shape-8" clipPathUnits="objectBoundingBox">
+        <path d="M .06 .05 C .03 .03 .02 .10 .04 .20 C .02 .30 .04 .40 .03 .50 C .02 .60 .04 .70 .03 .80 C .03 .88 .04 .94 .09 .95 C .18 .97 .28 .95 .38 .96 C .48 .94 .58 .96 .68 .95 C .78 .97 .88 .95 .93 .96 C .98 .95 .97 .88 .96 .78 C .98 .68 .96 .58 .97 .48 C .98 .38 .96 .28 .97 .18 C .97 .10 .96 .05 .91 .03 C .82 .01 .72 .04 .62 .02 C .52 .05 .42 .02 .32 .04 C .22 .01 .12 .04 .06 .05 Z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <div class="top-banner">
+    <img src="banner1.png" alt="The Inception of Learning">
+  </div>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">
+        <img src="logo.png" alt="Logo">
+        The Inception of Learning
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#manual">Manual</a></li>
+          <li class="nav-item"><a class="nav-link" href="#podcasts">Podcasts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#infographics">Infographics</a></li>
+          <li class="nav-item"><a class="nav-link" href="#articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+          <li class="nav-item"><a class="nav-link" href="#partners">Partners</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 scroll-anim slide-left">
+            <h1>Understanding the<br>New Generations</h1>
+            <div class="gen-line">
+              <span class="yellow">Gen Z</span>
+              <span class="and-word">and</span>
+              <span class="orange">Gen Alpha</span>
+            </div>
+            <p class="lead">
+              Each new generation learns in ways we never planned for, the current new Generations Z and Alpha are no different. The resources on this web page are here to help you catch up, and maybe get ahead. They were designed with youth workers, trainers, educators and teachers from different countries, cultures and backgrounds in mind. They are based on research we did in 2025, were developed with a broad range of people, tested and finally published.
+            </p>
+            <div class="hero-note hand-drawn-card">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">Are you keeping up?</div>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-5 mt-lg-0 scroll-anim slide-right">
+            <div class="hero-art">
+              <img src="ninja-vr.png" alt="Ninja with VR headset">
+              <img src="ninja-heart.png" alt="Ninja making a heart">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-section bg-section-manual" id="manual">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-8 scroll-anim slide-left">
+            <h2>Manual</h2>
+            <p>
+              Here you can find the Ninja Manual to work with Gen Z and Gen Alpha - a practical guide for youth workers, trainers, educators and teachers (yes, also teachers!). In the Manual you can read more about the learning preferences of the two generations, the ideas we put together for working with them, and the ready to use activities the project created. There are also tips and recommendations for staying in tune. The Manual was created as a result of a piece of research we conducted over several months, the outcomes of a Lab and a training course we conducted with youth workers, activists, trainers and educators. The activities in the Manual were created in the Lab and tested in the training course.
+            </p>
+            <div class="mt-4">
+              <a href="manual.pdf" class="btn counter-btn bg-green" id="btn-manual" target="_blank" rel="noopener">Download PDF <i class="fas fa-download ms-1"></i></a>
+              <div class="download-counter">
+                <strong id="counter-manual">0</strong>
+                <span class="counter-label">downloads</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center scroll-anim slide-right">
+            <div class="resource-stamp">
+              <img src="illustration-manual.png" alt="Manual illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+              <i class="fas fa-book placeholder-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-section bg-section-podcast" id="podcasts">
+      <div class="container">
+        <div class="row align-items-center flex-md-row-reverse">
+          <div class="col-md-8 scroll-anim slide-right">
+            <h2>Podcasts</h2>
+            <p>
+              In this section you can find 10 inspirational podcast interviews with professionals from all over the world. We engaged with experts such as Barbara Oakley (USA), David Yeager (USA) and Ashley Fell (Australia) who spoke about motivation, learning trends, myths and realities, leadership, and the participation of Gen Z and Gen Alpha in their learning.
+            </p>
+            <div class="mt-4">
+              <a href="https://talkingyouthwork.podbean.com/" class="btn counter-btn bg-pink" id="btn-podcast" target="_blank" rel="noopener">Listen on Podbean <i class="fas fa-external-link-alt ms-1"></i></a>
+              <div class="download-counter">
+                <strong id="counter-podcast">0</strong>
+                <span class="counter-label">listens</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center scroll-anim slide-left">
+            <div class="resource-stamp">
+              <img src="illustration-podcasts.png" alt="Podcasts illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+              <i class="fas fa-podcast placeholder-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-section bg-section-info" id="infographics">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-8 scroll-anim slide-left">
+            <h2>Infographics</h2>
+            <p>
+              We produced ten infographics that summarise the findings from the research we conducted within the frame of our project. They explore the learning needs and preferences of Gen Alpha and Gen Z, how learning is working in youth work and within the formal education system. They also provide tips and direction for staying in tune as a youth worker or educator.
+            </p>
+            <div class="mt-4">
+              <a href="infographics.pdf" class="btn counter-btn bg-blue" id="btn-info" target="_blank" rel="noopener">Download Infographics <i class="fas fa-download ms-1"></i></a>
+              <div class="download-counter">
+                <strong id="counter-info">0</strong>
+                <span class="counter-label">downloads</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center scroll-anim slide-right">
+            <div class="resource-stamp">
+              <img src="illustration-infographics.png" alt="Infographics illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+              <i class="fas fa-chart-pie placeholder-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-section bg-section-articles" id="articles">
+      <div class="container">
+        <div class="row align-items-center flex-md-row-reverse">
+          <div class="col-md-8 scroll-anim slide-right">
+            <h2>Articles and Videos</h2>
+            <p>
+              Check out the most common myths, misconceptions and misbeliefs linked to the brain and learning. In this section you can find articles about concepts such as Dale’s Learning Cone, the attention span of a Goldfish, only using 10% of the brain, and many more… Here you can read what the current knowledge and understanding says about these “theories”.
+            </p>
+            <p>
+              If you don’t have time to read the full articles, we made a series of videos so you can get to know the essence of each article in just over a minute each!
+            </p>
+            <div class="mt-4">
+              <a href="#" class="btn counter-btn bg-yellow" id="btn-read">Read Articles <i class="fas fa-download ms-1"></i></a>
+              <a href="https://www.youtube.com/@talkingyouthwork" class="btn counter-btn bg-orange" id="btn-watch" target="_blank" rel="noopener">Watch Videos <i class="fas fa-play ms-1"></i></a>
+              <br>
+              <div class="download-counter mt-2">
+                <strong id="counter-read">0</strong>
+                <span class="counter-label">downloads</span>
+                <strong id="counter-watch" class="ms-3">0</strong>
+                <span class="counter-label">views</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 text-center scroll-anim slide-left">
+            <div class="resource-stamp">
+              <img src="illustration-articles.png" alt="Articles illustration" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+              <i class="fas fa-newspaper placeholder-icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-overview" id="overview">
+      <div class="container">
+        <h2 class="text-center scroll-anim slide-left">Overview of the project</h2>
+
+        <div class="row justify-content-center mt-5">
+          <div class="col-lg-10 scroll-anim slide-right">
+            <h3>Why the “Inception of Learning" project?</h3>
+
+            <p class="overview-text">
+              A friendly conversation between two educators around a simple question sparked the idea for this project. That question was “why do we do things the way we do them and is it still working?”. The context of the question was in relation to running training courses and seeing that the groups we work with are different than they were several years before. It is clear that the COVID-19 pandemic has had an influence, but it was also clear that the needs and preferences of the groups we are working with had changed (Gen Z and even some Gen Alpha).
+            </p>
+            <p class="overview-text">
+              We decided to take a closer look at the learning needs and preferences of these two Generations - who are mostly the current beneficiaries of non-formal education events and formal education - and see if the traditional classic methods and created learning spaces corresponded with their preferences. If the needs turned out to be different, how then should we update and refresh them so that they can serve these new generations in the best way possible.
+            </p>
+            <p class="overview-text">
+              The project and its results have been created for everyone who, when working with a group, senses that something is off or different than it used to be. It is for anyone who is curious and open to learning and wants to stay updated or ahead in this fast paced ever changing world of education and learning.
+            </p>
+
+            <div class="aim-note hand-drawn-card bg-green">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                The main aim of the project is to support youth workers, trainers, activists, educators and teachers in delivering quality learning experiences with Gen Z and Gen Alpha.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-heading text-center scroll-anim slide-left">
+          <h3>When? Where? How? - the timeline of the project!</h3>
+        </div>
+
+        <div class="timeline-container">
+          <div class="timeline-item left scroll-anim slide-left">
+            <div class="timeline-node">01</div>
+            <div class="timeline-card hand-drawn-card bg-yellow">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>April 2025 - September 2025</time>
+                <h4>Research</h4>
+                <p>Focus groups, desk research, questionnaire</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item right scroll-anim slide-right">
+            <div class="timeline-node">02</div>
+            <div class="timeline-card hand-drawn-card bg-pink">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>September 2025</time>
+                <h4>Laboratory</h4>
+                <p>Brainstorming, testing, generating ideas and exchanging experiences with peers involved in non-formal and formal learning experiences.<br>Creating activities for overcoming blocks and opening new channels of learning with Gen Z and Gem Alpha.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item left scroll-anim slide-left">
+            <div class="timeline-node">03</div>
+            <div class="timeline-card hand-drawn-card bg-blue">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>October 2025 to July 2026</time>
+                <h4>Podcasts</h4>
+                <p>Production of eight podcasts on learning with Gen Z and Gen Alpha.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item right scroll-anim slide-right">
+            <div class="timeline-node">04</div>
+            <div class="timeline-card hand-drawn-card bg-green">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>May 2026</time>
+                <h4>Training Course</h4>
+                <p>Youth workers, activists, trainers, educator and teachers tested, reviewed, checked and discussed the methods and activities, and the content for the Manual.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item left scroll-anim slide-left">
+            <div class="timeline-node">05</div>
+            <div class="timeline-card hand-drawn-card bg-orange">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>June - September 2026</time>
+                <h4>Manual, Infographics, Articles and Videos</h4>
+                <p>Producing the content for each and creating the products ready for dissemination.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item right scroll-anim slide-right">
+            <div class="timeline-node">06</div>
+            <div class="timeline-card hand-drawn-card bg-lav">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <time>November to December 2026</time>
+                <h4>Multipliers Events</h4>
+                <p>Each partner sharing and promoting the results and products of the project.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-partners" id="partners">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-8 text-center scroll-anim slide-left">
+            <h2>Little bio about each partner</h2>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 scroll-anim slide-left">
+            <div class="partner-card hand-drawn-card bg-yellow">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <h5>Fundacja Instytut Innowacji - coordinator</h5>
+                <p>
+                  Fundacja Instytut Innowacji is a Polish non-governmental organisation based in Warsaw established in 2006. We support the development of young people, youth workers, trainers and educators through non-formal education and international cooperation. We organise educational projects, training courses and youth exchanges, mainly within the Erasmus+ and European Solidarity Corps programmes. Our activities focus on developing essential skills for the future, particularly creativity, empathic communication, collaboration, critical thinking and facilitation of learning.
+                </p>
+                <p>
+                  We believe in learning through experience, building meaningful relationships and creating spaces where everyone can grow and develop.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 scroll-anim slide-right">
+            <div class="partner-card hand-drawn-card bg-pink">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <h5>Jasna Idnina</h5>
+                <p>
+                  Jasna Idnina Association is a civil society organisation based in Nebregovo, North Macedonia, with experience in European youth programmes and international cooperation. The association has participated in Erasmus+ initiatives focusing on youth exchanges, non-formal education, intercultural learning, and capacity building for youth workers. Its documented activities include international training courses and educational projects addressing youth mental health, European funding opportunities, and innovative learning approaches. Through these initiatives, Jasna Idnina has contributed to cross-border collaboration and knowledge exchange among young people and youth organizations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 scroll-anim slide-left">
+            <div class="partner-card hand-drawn-card bg-blue">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <h5>Odd Socks</h5>
+                <p>
+                  Odd Socks is a small consultancy company based in Montenegro. Odd Socks works primarily in the European youth sector developing training courses, publications, website content, and facilitating and reporting for youth work conferences. Odd Socks works with locally based youth organisation, national level organisations and European level organisations. At the European level this includes the European Union Erasmus+ Youth programmes, various Council of Europe departments, and the EU-Council of Europe Youth Partnership.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 scroll-anim slide-right">
+            <div class="partner-card hand-drawn-card bg-green">
+              <div class="drawn-shape"></div>
+              <div class="drawn-content">
+                <h5>Team Mais</h5>
+                <p>
+                  Team MAIS is a consultancy company based in Lisbon with solid international experience focused on innovative solutions for Youth Work and Adult Education. Team Mais develops training and educational materials mostly for educators, trainers, teachers and organisations. Established in 2007, the company works with organisations across Europe through the Erasmus+ programme and other frameworks. Previously, the team was part of an informal group of young youth workers who developed several international projects within the Youth in Action programme, gaining several years of experience managing international projects and developing content for international non-formal education contexts.
+                </p>
+                <a href="http://www.teammais.pt" target="_blank" rel="noopener">www.teammais.pt</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <span class="brand-name">The Inception of Learning</span>
+        <span class="copy">© 2026. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section[id], div[id="manual"], div[id="podcasts"], div[id="infographics"], div[id="articles"]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === '#' + entry.target.id) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-50% 0px -50% 0px' });
+      sections.forEach(section => navObserver.observe(section));
+
+      const animElements = document.querySelectorAll('.scroll-anim');
+      const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+      animElements.forEach(el => scrollObserver.observe(el));
+
+      function setupCounter(buttonSelector, counterId, storageKey) {
+        const btn = document.querySelector(buttonSelector);
+        const counterEl = document.getElementById(counterId);
+
+        if (!btn || !counterEl) return;
+
+        let currentCount = parseInt(localStorage.getItem(storageKey)) || 0;
+        counterEl.textContent = currentCount;
+
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          currentCount++;
+          localStorage.setItem(storageKey, currentCount);
+          counterEl.textContent = currentCount;
+
+          counterEl.classList.add('bump');
+          setTimeout(() => {
+            counterEl.classList.remove('bump');
+          }, 300);
+        });
+      }
+
+      setupCounter('#btn-manual', 'counter-manual', 'storage_manual');
+      setupCounter('#btn-podcast', 'counter-podcast', 'storage_podcasts');
+      setupCounter('#btn-info', 'counter-info', 'storage_infographics');
+      setupCounter('#btn-read', 'counter-read', 'storage_articles_read');
+      setupCounter('#btn-watch', 'counter-watch', 'storage_articles_watch');
+    });
+  </script>
+</body>
+</html>
