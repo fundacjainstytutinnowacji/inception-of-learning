@@ -679,7 +679,7 @@
               Here you can find the Ninja Manual to work with Gen Z and Gen Alpha - a practical guide for youth workers, trainers, educators and teachers (yes, also teachers!). In the Manual you can read more about the learning preferences of the two generations, the ideas we put together for working with them, and the ready to use activities the project created. There are also tips and recommendations for staying in tune. The Manual was created as a result of a piece of research we conducted over several months, the outcomes of a Lab and a training course we conducted with youth workers, activists, trainers and educators. The activities in the Manual were created in the Lab and tested in the training course.
             </p>
             <div class="mt-4">
-              <a href="manual.pdf" class="btn counter-btn bg-green" id="btn-manual" target="_blank" rel="noopener">Download PDF <i class="fas fa-download ms-1"></i></a>
+              <a href="./manual.pdf" download="manual.pdf" class="btn counter-btn bg-green" id="btn-manual" target="_blank" rel="noopener">Download PDF <i class="fas fa-download ms-1"></i></a>
               <div class="download-counter">
                 <strong id="counter-manual">0</strong>
                 <span class="counter-label">downloads</span>
@@ -731,7 +731,7 @@
               We produced ten infographics that summarise the findings from the research we conducted within the frame of our project. They explore the learning needs and preferences of Gen Alpha and Gen Z, how learning is working in youth work and within the formal education system. They also provide tips and direction for staying in tune as a youth worker or educator.
             </p>
             <div class="mt-4">
-              <a href="infographics.pdf" class="btn counter-btn bg-blue" id="btn-info" target="_blank" rel="noopener">Download Infographics <i class="fas fa-download ms-1"></i></a>
+              <a href="./infographics.pdf" download="infographics.pdf" class="btn counter-btn bg-blue" id="btn-info" target="_blank" rel="noopener">Download Infographics <i class="fas fa-download ms-1"></i></a>
               <div class="download-counter">
                 <strong id="counter-info">0</strong>
                 <span class="counter-label">downloads</span>
@@ -760,7 +760,7 @@
               If you don’t have time to read the full articles, we made a series of videos so you can get to know the essence of each article in just over a minute each!
             </p>
             <div class="mt-4">
-              <a href="#" class="btn counter-btn bg-yellow" id="btn-read">Read Articles <i class="fas fa-download ms-1"></i></a>
+              <a href="#articles" class="btn counter-btn bg-yellow" id="btn-read">Read Articles <i class="fas fa-download ms-1"></i></a>
               <a href="https://www.youtube.com/@talkingyouthwork" class="btn counter-btn bg-orange" id="btn-watch" target="_blank" rel="noopener">Watch Videos <i class="fas fa-play ms-1"></i></a>
               <br>
               <div class="download-counter mt-2">
@@ -1000,20 +1000,35 @@
 
         if (!btn || !counterEl) return;
 
-        let currentCount = parseInt(localStorage.getItem(storageKey)) || 0;
+        // These counters are browser-local display counters, not global analytics.
+        let currentCount = 0;
+        try {
+          currentCount = parseInt(localStorage.getItem(storageKey), 10) || 0;
+        } catch (error) {
+          currentCount = 0;
+        }
         counterEl.textContent = currentCount;
 
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
+        btn.addEventListener('click', function() {
+          currentCount += 1;
 
-          currentCount++;
-          localStorage.setItem(storageKey, currentCount);
+          try {
+            localStorage.setItem(storageKey, String(currentCount));
+          } catch (error) {
+            // Navigation/download must still work when storage is unavailable.
+          }
+
           counterEl.textContent = currentCount;
-
+          counterEl.classList.remove('bump');
+          void counterEl.offsetWidth;
           counterEl.classList.add('bump');
-          setTimeout(() => {
+
+          window.setTimeout(() => {
             counterEl.classList.remove('bump');
           }, 300);
+
+          // IMPORTANT: Do not call preventDefault().
+          // The browser must be allowed to follow the link or download the file.
         });
       }
 
